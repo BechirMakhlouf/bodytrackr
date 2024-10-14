@@ -1,17 +1,25 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, StyleSheet, Platform, TextInput, Button } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useState } from "react";
+import { setupMicrotasks } from "react-native-reanimated/lib/typescript/reanimated2/threads";
 
 export default function HomeScreen() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
-          source={require("@/assets/images/partial-react-logo.png")}
+          //source={require("@/assets/images/partial-react-logo.png")}
+          src={
+            "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F1229356%2Fpexels-photo-1229356.jpeg%3Fcs%3Dsrgb%26dl%3Dabs-adult-athlete-1229356.jpg%26fm%3Djpg&f=1&nofb=1&ipt=836e6c8f22e2d53627806d1e581267784456f1a8af48f6a201d118ef217cc240&ipo=images"
+          }
           style={styles.reactLogo}
         />
       }
@@ -21,34 +29,23 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: "cmd + d", android: "cmd + m" })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this
-          starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{" "}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+        <ThemedText>Log in to see Track your progress!</ThemedText>
+        <TextInput
+          style={styles.input}
+          placeholder="Type your email"
+          value={email}
+          onChangeText={setEmail}
+          placeholderTextColor={"lightgray"}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Type your password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={true}
+          placeholderTextColor={"lightgray"}
+        />
+        <Button title="log in" color={"teal"} />
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -65,10 +62,18 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reactLogo: {
-    height: 178,
-    width: 290,
+    height: "100%",
+    width: "100%",
     bottom: 0,
     left: 0,
     position: "absolute",
+  },
+
+  input: {
+    height: 40,
+    color: "white",
+    borderColor: "gray",
+    borderWidth: 1,
+    paddingLeft: 8,
   },
 });
