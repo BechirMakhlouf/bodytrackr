@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Platform, TextInput, Button } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -9,14 +16,25 @@ import { setupMicrotasks } from "react-native-reanimated/lib/typescript/reanimat
 import { SupabaseClient } from "@supabase/supabase-js";
 import { SUPABASE_CLIENT } from "@/supabase";
 
-async function login(
+async function signUp(
   supabase: SupabaseClient,
   email: string,
   password: string,
 ) {
   return await supabase.auth.signUp({ email, password });
 }
+
+async function signIn(
+  supabase: SupabaseClient,
+  email: string,
+  password: string,
+) {
+  return await supabase.auth.signInWithPassword({ email, password });
+}
+
 export default function HomeScreen() {
+  const [signMode, setSignMode] = useState<"login" | "signup">("login");
+  const [isSignedUp, setIsSignedUp] = useState(false);
   const [isLogged, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +59,9 @@ export default function HomeScreen() {
             <HelloWave />
           </ThemedView>
           <ThemedView style={styles.stepContainer}>
-            <ThemedText>Log in to see Track your progress!</ThemedText>
+            <ThemedText>
+              Put your credentials to see Track your progress!
+            </ThemedText>
             <TextInput
               style={styles.input}
               placeholder="Type your email"
@@ -57,20 +77,43 @@ export default function HomeScreen() {
               secureTextEntry={true}
               placeholderTextColor={"lightgray"}
             />
+
             <Button
-              title="log in"
+              title={signMode == "login" ? "log in" : "sign up"}
               color={"teal"}
               onPress={async () => {
-                const loginInfo = await login(SUPABASE_CLIENT, email, password);
-                console.log("loginInfo", loginInfo);
+                let loginInfo;
+                if (signMode == "login") {
+                  loginInfo = await signIn(SUPABASE_CLIENT, email, password);
+                } else {
+                  loginInfo = await signUp(SUPABASE_CLIENT, email, password);
+                }
                 setIsLoggedIn(loginInfo.error ? false : true);
               }}
             />
+            <TouchableOpacity
+              onPress={() => {
+                setSignMode(signMode == "signup" ? "login" : "signup");
+              }}
+            >
+              {signMode == "login" ? (
+                <ThemedText>Don't have an account? Sign Up</ThemedText>
+              ) : (
+                <ThemedText>Already have an account? Sign in</ThemedText>
+              )}
+            </TouchableOpacity>
           </ThemedView>
         </>
       ) : (
         <ThemedView>
           <ThemedText>Logged in!</ThemedText>
+          <Button
+            title="Sign out"
+            color={"teal"}
+            onPress={() => {
+              setIsLoggedIn(false);
+            }}
+          />
         </ThemedView>
       )}
     </ParallaxScrollView>
