@@ -6,8 +6,18 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useState } from "react";
 import { setupMicrotasks } from "react-native-reanimated/lib/typescript/reanimated2/threads";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { SUPABASE_CLIENT } from "@/supabase";
 
+async function login(
+  supabase: SupabaseClient,
+  email: string,
+  password: string,
+) {
+  return await supabase.auth.signUp({ email, password });
+}
 export default function HomeScreen() {
+  const [isLogged, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,29 +34,45 @@ export default function HomeScreen() {
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">BodyTrackr!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText>Log in to see Track your progress!</ThemedText>
-        <TextInput
-          style={styles.input}
-          placeholder="Type your email"
-          value={email}
-          onChangeText={setEmail}
-          placeholderTextColor={"lightgray"}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Type your password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={true}
-          placeholderTextColor={"lightgray"}
-        />
-        <Button title="log in" color={"teal"} />
-      </ThemedView>
+      {!isLogged ? (
+        <>
+          <ThemedView style={styles.titleContainer}>
+            <ThemedText type="title">BodyTrackr!</ThemedText>
+            <HelloWave />
+          </ThemedView>
+          <ThemedView style={styles.stepContainer}>
+            <ThemedText>Log in to see Track your progress!</ThemedText>
+            <TextInput
+              style={styles.input}
+              placeholder="Type your email"
+              value={email}
+              onChangeText={setEmail}
+              placeholderTextColor={"lightgray"}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Type your password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={true}
+              placeholderTextColor={"lightgray"}
+            />
+            <Button
+              title="log in"
+              color={"teal"}
+              onPress={async () => {
+                const loginInfo = await login(SUPABASE_CLIENT, email, password);
+                console.log("loginInfo", loginInfo);
+                setIsLoggedIn(loginInfo.error ? false : true);
+              }}
+            />
+          </ThemedView>
+        </>
+      ) : (
+        <ThemedView>
+          <ThemedText>Logged in!</ThemedText>
+        </ThemedView>
+      )}
     </ParallaxScrollView>
   );
 }
