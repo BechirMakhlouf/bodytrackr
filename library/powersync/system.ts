@@ -1,36 +1,36 @@
-import "@azure/core-asynciterator-polyfill";
+import '@azure/core-asynciterator-polyfill'
 
-import { PowerSyncDatabase } from "@powersync/react-native";
-import React from "react";
-import { SupabaseStorageAdapter } from "../storage/SupabaseStorageAdapter";
-
-import { type AttachmentRecord } from "@powersync/attachments";
-import Logger from "js-logger";
-import { KVStorage } from "../storage/KVStorage";
-import { AppConfig } from "../supabase/AppConfig";
-import { SupabaseConnector } from "../supabase/SupabaseConnector";
-import { AppSchema } from "./AppSchema";
+import { PowerSyncDatabase } from '@powersync/react-native'
+import React from 'react'
+import type { SupabaseStorageAdapter } from '../storage/SupabaseStorageAdapter'
+import { wrapPowerSyncWithKysely } from '@powersync/kysely-driver'
+import Logger from 'js-logger'
+import { KVStorage } from '../storage/KVStorage'
+import { AppConfig } from '../supabase/AppConfig'
+import { SupabaseConnector } from '../supabase/SupabaseConnector'
+import { AppSchema, type Database } from './AppSchema'
 //import { PhotoAttachmentQueue } from './PhotoAttachmentQueue';
 
-Logger.useDefaults();
+Logger.useDefaults()
 
 export class System {
-  kvStorage: KVStorage;
-  storage: SupabaseStorageAdapter;
-  supabaseConnector: SupabaseConnector;
-  powersync: PowerSyncDatabase;
+  kvStorage: KVStorage
+  storage: SupabaseStorageAdapter
+  supabaseConnector: SupabaseConnector
+  powersync: PowerSyncDatabase = new PowerSyncDatabase({
+    schema: AppSchema,
+    database: {
+      dbFilename: 'sqlite.db',
+    },
+  })
+  db = wrapPowerSyncWithKysely<Database>(this.powersync)
+
   //attachmentQueue: PhotoAttachmentQueue | undefined = undefined;
 
   constructor() {
-    this.kvStorage = new KVStorage();
-    this.supabaseConnector = new SupabaseConnector(this);
-    this.storage = this.supabaseConnector.storage;
-    this.powersync = new PowerSyncDatabase({
-      schema: AppSchema,
-      database: {
-        dbFilename: "sqlite.db",
-      },
-    });
+    this.kvStorage = new KVStorage()
+    this.supabaseConnector = new SupabaseConnector(this)
+    this.storage = this.supabaseConnector.storage
     /**
      * The snippet below uses OP-SQLite as the default database adapter.
      * You will have to uninstall `@journeyapps/react-native-quick-sqlite` and
@@ -62,16 +62,21 @@ export class System {
   }
 
   async init() {
-    await this.powersync.init();
-    await this.powersync.connect(this.supabaseConnector);
+    if (!this.powersync.connected) {
+      await this.powersync.init()
+      await this.powersync.connect(this.supabaseConnector)
+    }
 
     //if (this.attachmentQueue) {
     //  await this.attachmentQueue.init();
     //}
   }
+  async disconnect() {
+    await this.powersync.disconnect()
+    return (await this.supabaseConnector.client.auth.signOut()).error
+  }
 }
 
-export const system = new System();
-
-export const SystemContext = React.createContext(system);
-export const useSystem = () => React.useContext(SystemContext);
+export const system = new System()
+export const SystemContext = React.createContext(system)
+export const useSystem = () => React.useContext(SystemContext)

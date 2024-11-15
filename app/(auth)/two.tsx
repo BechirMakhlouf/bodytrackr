@@ -1,56 +1,77 @@
-import DateTimePicker from "react-native-ui-datepicker";
-import { Button, ButtonIcon, Input, Text, View, XStack, YStack } from "tamagui";
-import { useTheme } from "@react-navigation/native";
-import { useState } from "react";
-import { Airplay, Calendar, PlusCircle } from "@tamagui/lucide-icons";
-import { useSystem } from "library/powersync/system";
-import * as Crypto from "expo-crypto";
+import { Button, Text, XStack, ScrollView } from 'tamagui'
+import { useAddWeightDialogState } from 'components/AddWeightDialog'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useCallback, useEffect, useState } from 'react'
+import { ChevronRight, Plus } from '@tamagui/lucide-icons'
+import { useAppStore } from 'store'
+import { RefreshControl } from 'react-native'
+import type { UserWeight } from 'repository'
 
 export default function TabTwoScreen() {
-  const theme = useTheme();
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [weightKg, setWeightKg] = useState(0);
+  const { repository } = useAppStore()
+  const { openWeightDialog } = useAddWeightDialogState()
+  const [userWeightList, setUserWeightList] = useState([] as UserWeight[])
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
-  const [dateAt, setDateAt] = useState(new Date());
-  const system = useSystem();
+  const onRefresh = useCallback(() => {
+    setIsRefreshing(true)
+    setTimeout(() => {
+      setIsRefreshing(false)
+    }, 2000)
+  }, [])
+
+  const updateUserWeightList = useCallback(async () => {
+    if (!repository) return
+    for await (const updatedList of repository.userWeightRepo.watch()) {
+      setUserWeightList(updatedList)
+    }
+  }, [repository])
+
+  useEffect(() => {
+    if (!repository) {
+      return
+    }
+    updateUserWeightList()
+  }, [])
+
   return (
-    <YStack gap="$3" marginHorizontal="$4" marginVertical="$4">
-      <Input
-        placeholder="Your Weight"
-        keyboardType="numeric"
-        inputMode="numeric"
-        value={"" + weightKg}
-        onChangeText={(text) => setWeightKg(+text)}
-      />
-
-      <Button icon={Calendar} onPress={() => setShowDatePicker(true)}>
-        Open Picker
-      </Button>
-
-      <DateTimePicker
-        mode="single"
-        date={dateAt}
-        maxDate={new Date()}
-        minDate={new Date(0)}
-        onChange={(v) => setDateAt(new Date(v.date?.valueOf() || new Date()))}
-      />
-      <Button
-        icon={PlusCircle}
-        theme="blue_active"
-        onPress={async () => {
-          const user = await system.supabaseConnector.client.auth.getUser();
-          const user_id = await user.data.user?.id!;
-          console.debug(
-            "result: ",
-            await system.powersync.execute(
-              "INSERT INTO users_weight (id, user_id, date_at, weight_kg, created_at, updated_at, deleted) values (uuid(), ?, ?, ?, datetime(), datetime() )",
-              [user_id, dateAt, weightKg]
-            )
-          );
-        }}
+    <SafeAreaView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
       >
-        Add weight
+        {userWeightList.map((weight) => {
+          return (
+            <XStack
+              onPress={() =>
+                openWeightDialog(
+                  weight.weight_kg || undefined,
+                  new Date(weight.date_at!),
+                  weight.id
+                )
+              }
+              key={weight.id}
+              paddingHorizontal="$8"
+              paddingVertical="$4"
+              borderColor={'$accentBackground'}
+              justifyContent="space-between"
+            >
+              <Text fontSize={'$6'}>{weight.weight_kg}</Text>
+              <Text fontSize={'$6'}>{weight.date_at}</Text>
+              <ChevronRight />
+            </XStack>
+          )
+        })}
+      </ScrollView>
+      <Button
+        icon={Plus}
+        theme={'active'}
+        marginHorizontal="$4"
+        onPress={() => openWeightDialog(undefined, new Date(), undefined)}
+      >
+        Add Weight
       </Button>
-    </YStack>
-  );
+    </SafeAreaView>
+  )
 }

@@ -1,5 +1,5 @@
 //import { column, Schema, Table } from '@powersync/web';
-import { column, Schema, Table } from "@powersync/react-native";
+import { column, Schema, Table } from '@powersync/react-native'
 
 const body_measurements_types = new Table(
   {
@@ -10,7 +10,7 @@ const body_measurements_types = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 const users_weight = new Table(
   {
@@ -23,7 +23,7 @@ const users_weight = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 const users_body_fat = new Table(
   {
@@ -36,7 +36,7 @@ const users_body_fat = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 const users_pr = new Table(
   {
@@ -52,7 +52,7 @@ const users_pr = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 const users_info = new Table(
   {
@@ -65,7 +65,7 @@ const users_info = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 const users_profiles = new Table(
   {
@@ -79,7 +79,7 @@ const users_profiles = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 const users_settings = new Table(
   {
@@ -92,7 +92,7 @@ const users_settings = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 const users_progress_media = new Table(
   {
@@ -105,7 +105,7 @@ const users_progress_media = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 const users_body_measurements_cm = new Table(
   {
@@ -118,7 +118,7 @@ const users_body_measurements_cm = new Table(
     updated_at: column.text,
   },
   { indexes: {} }
-);
+)
 
 export const AppSchema = new Schema({
   body_measurements_types,
@@ -130,6 +130,6 @@ export const AppSchema = new Schema({
   users_settings,
   users_progress_media,
   users_body_measurements_cm,
-});
+})
 
-export type Database = (typeof AppSchema)["types"];
+export type Database = (typeof AppSchema)['types']
