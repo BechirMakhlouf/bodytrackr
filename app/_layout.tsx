@@ -9,7 +9,6 @@ import { router, SplashScreen, Stack, useSegments } from 'expo-router'
 import { Provider } from './Provider'
 import { useAppStore } from 'store'
 import { AlertDialogWrapper } from 'components/AlertDialog'
-
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -59,11 +58,15 @@ function RootLayoutNav() {
   useEffect(() => {
     initApp()
   }, [])
+
   useEffect(() => {
+    console.debug('re-evaluating the route')
+    console.debug('segment[0]: ', segment[0])
+    console.debug('return to root: ', segment[0] === '(auth)' && !isSignedIn)
     if (segment[0] === '(auth)' && !isSignedIn) {
-      router.dismissAll()
+      router.replace('/')
     } else if (isSignedIn) {
-      router.navigate('/(auth)')
+      router.replace('/(auth)/(tabs)')
     }
   }, [isSignedIn])
 
@@ -90,21 +93,6 @@ function RootLayoutNav() {
             gestureDirection: 'horizontal',
           }}
         />
-        {
-          //<Stack.Screen
-          //  name="modal"
-          //  options={{
-          //    title: "Modal",
-          //    presentation: "modal",
-          //    animation: "slide_from_right",
-          //    gestureEnabled: true,
-          //    gestureDirection: "horizontal",
-          //    contentStyle: {
-          //      backgroundColor: theme.background.val,
-          //    },
-          //  }}
-          ///>
-        }
       </Stack>
     </ThemeProvider>
   )

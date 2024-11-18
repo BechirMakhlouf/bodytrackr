@@ -1,55 +1,63 @@
-import { Tabs } from 'expo-router'
-import { View, Button, Text, useTheme } from 'tamagui'
-import { Atom, LogOut, Weight } from '@tamagui/lucide-icons'
-import { useAppStore } from 'store'
+import { StatusBar, useColorScheme } from 'react-native'
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
+import { Stack } from 'expo-router'
+//import { Provider } from './Provider'
+import { useTheme, Text } from 'tamagui'
 
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
-import { AddWeightDialog } from 'components/AddWeightDialog'
-export default function TabLayout() {
+export default function tabLayoutNav() {
+  const colorScheme = useColorScheme()
   const theme = useTheme()
-  const { signOut } = useAppStore()
-
   return (
     <>
-      <AddWeightDialog />
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: theme.red10.val,
-          tabBarStyle: {
-            backgroundColor: theme.background.val,
-            borderTopColor: theme.borderColor.val,
-          },
-          headerStyle: {
-            backgroundColor: theme.background.val,
-            borderBottomColor: theme.borderColor.val,
-          },
-          headerTintColor: theme.color.val,
-        }}
-      >
-        <Tabs.Screen
-          name="index"
+      <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
+      <Stack>
+        <Stack.Screen
+          name="(tabs)"
           options={{
-            title: 'Tab One',
-            tabBarIcon: ({ color }) => <Atom color={color} />,
-            headerRight: () => (
-              <Button
-                mr="$4"
-                bg="$purple8"
-                backgroundColor={'$colorTransparent'}
-                icon={<LogOut size={'$2'} />}
-                onPress={async () => await signOut()}
-              ></Button>
-            ),
+            headerShown: false,
           }}
         />
-        <Tabs.Screen
-          name="two"
+        <Stack.Screen
+          name="Settings"
           options={{
-            title: 'Weight Log',
-            tabBarIcon: ({ color }) => <Weight color={color} />,
+            title: 'Settings',
+            presentation: 'modal',
+            animation: 'slide_from_right',
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            contentStyle: {
+              backgroundColor: theme.background.val,
+            },
           }}
         />
-      </Tabs>
+        <Stack.Screen
+          name="ProfileSettings"
+          options={{
+            title: 'Edit Profile',
+            presentation: 'modal',
+            animation: 'slide_from_right',
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            contentStyle: {
+              backgroundColor: theme.background.val,
+            },
+          }}
+        />
+        <Stack.Screen
+          name="measurement/[measurement]"
+          options={{
+            title: 'Measurement',
+            headerShown: false,
+            presentation: 'modal',
+            animation: 'slide_from_right',
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            contentStyle: {
+              //backgroundColor: theme.background.val,
+            },
+          }}
+        />
+      </Stack>
     </>
   )
 }

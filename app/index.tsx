@@ -13,8 +13,6 @@ export default function InputsDemo() {
         alignItems="center"
         height={'80%'}
         justifyContent="center"
-        //borderWidth="$1"
-        //borderColor={"blue"}
         overflow="hidden"
         gap="$4"
         margin="$3"

@@ -53,7 +53,6 @@ const users_pr = new Table(
   },
   { indexes: {} }
 )
-
 const users_info = new Table(
   {
     // id column (text) is automatically included
@@ -80,7 +79,6 @@ const users_profiles = new Table(
   },
   { indexes: {} }
 )
-
 const users_settings = new Table(
   {
     // id column (text) is automatically included

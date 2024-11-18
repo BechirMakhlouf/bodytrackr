@@ -35,7 +35,6 @@ interface AddWeightFormInput {
   weight: string
   date: Date
 }
-
 //TODO: make calendar adhere to light/dark themes
 //TODO: reset AddWeightDialog state every open
 export function AddWeightDialog() {
@@ -69,7 +68,7 @@ export function AddWeightDialog() {
     if (isUpdate || (await repository?.userWeightRepo.get(data.date))) {
       await alertDialogState.setAlertDialogState({
         onConfirm: async () => {
-          await repository?.userWeightRepo.upsert_v2(+data.weight, data.date)
+          await repository?.userWeightRepo.upsert(+data.weight, data.date)
           setIsOpen(false)
         },
         title: 'Update weight',
@@ -77,7 +76,7 @@ export function AddWeightDialog() {
         isOpen: true,
       })
     } else {
-      await repository?.userWeightRepo.upsert_v2(+data.weight, data.date)
+      await repository?.userWeightRepo.upsert(+data.weight, data.date)
       setIsOpen(false)
     }
   }

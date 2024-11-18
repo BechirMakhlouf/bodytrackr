@@ -64,7 +64,6 @@ export default function InputsDemo() {
                 size={'$5'}
                 theme={error && 'red'}
                 placeholder={`Enter email...`}
-                secureTextEntry
                 keyboardType="email-address"
                 value={value}
                 onBlur={onBlur}
@@ -91,6 +90,7 @@ export default function InputsDemo() {
                 theme={error && 'red'}
                 placeholder={`enter password...`}
                 secureTextEntry
+                textContentType="password"
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}

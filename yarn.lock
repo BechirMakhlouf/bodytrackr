@@ -6685,7 +6685,8 @@ __metadata:
     expo-build-properties: "npm:~0.12.5"
     expo-crypto: "npm:~13.0.2"
     expo-font: "npm:~12.0.10"
-    expo-linear-gradient: "npm:^13.0.2"
+    expo-haptics: "npm:~13.0.1"
+    expo-linear-gradient: "npm:~13.0.2"
     expo-linking: "npm:~6.3.1"
     expo-router: "npm:~3.5.23"
     expo-secure-store: "npm:~13.0.2"
@@ -6698,13 +6699,12 @@ __metadata:
     react-hook-form: "npm:^7.53.2"
     react-native: "npm:0.75.2"
     react-native-gesture-handler: "npm:^2.21.0"
-    react-native-infinite-wheel-picker: "npm:^1.0.0"
+    react-native-gifted-charts: "npm:^1.4.47"
     react-native-modal-datetime-picker: "npm:^18.0.0"
     react-native-reanimated: "npm:^3.16.1"
     react-native-safe-area-context: "npm:4.10.9"
     react-native-screens: "npm:~3.34.0"
-    react-native-svg: "npm:15.6.0"
-    react-native-ui-datepicker: "npm:^2.0.4"
+    react-native-svg: "npm:15.9.0"
     react-native-web: "npm:^0.19.12"
     react-native-wheel-scrollview-picker: "npm:^2.0.6"
     tamagui: "npm:^1.116.14"
@@ -7865,7 +7865,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.13, dayjs@npm:^1.8.15":
+"dayjs@npm:^1.8.15":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: 10/7374d63ab179b8d909a95e74790def25c8986e329ae989840bacb8b1888be116d20e1c4eee75a69ea0dfbae13172efc50ef85619d304ee7ca3c01d5878b704f5
@@ -8821,6 +8821,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-haptics@npm:~13.0.1":
+  version: 13.0.1
+  resolution: "expo-haptics@npm:13.0.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 10/2ed8d292f89208b21fece50c2d21c4272833fd37cb769e382365a9502b844c33f582ceee374ad8d3c184cc75418ca9a6daf54005de281c0a952c7f2a39b026c9
+  languageName: node
+  linkType: hard
+
 "expo-keep-awake@npm:~13.0.2":
   version: 13.0.2
   resolution: "expo-keep-awake@npm:13.0.2"
@@ -8830,7 +8839,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-linear-gradient@npm:^13.0.2":
+"expo-linear-gradient@npm:~13.0.2":
   version: 13.0.2
   resolution: "expo-linear-gradient@npm:13.0.2"
   peerDependencies:
@@ -9592,6 +9601,16 @@ __metadata:
   version: 1.0.0
   resolution: "getenv@npm:1.0.0"
   checksum: 10/0b8f5f6ddc2400712bf584765e0b218a7b9eabe41d3cafaf2b73fc36140248f72f7040a38f852804a321ec9813a6873a7cafd7bf1d3ab43e8b6f9a18aba663ad
+  languageName: node
+  linkType: hard
+
+"gifted-charts-core@npm:0.1.47":
+  version: 0.1.47
+  resolution: "gifted-charts-core@npm:0.1.47"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10/9183e0d471e466d4f393218379ab82258b3b273c249bff75d6870e3c0aa6ce0c5a5217c4d6b27b85515e4db3d3a857d3e1ac1a0b5c6a4ffafa548f0536aaf51b
   languageName: node
   linkType: hard
 
@@ -13345,6 +13364,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-gifted-charts@npm:^1.4.47":
+  version: 1.4.47
+  resolution: "react-native-gifted-charts@npm:1.4.47"
+  dependencies:
+    gifted-charts-core: "npm:0.1.47"
+  peerDependencies:
+    expo-linear-gradient: "*"
+    react: "*"
+    react-native: "*"
+    react-native-linear-gradient: "*"
+    react-native-svg: "*"
+  peerDependenciesMeta:
+    expo-linear-gradient:
+      optional: true
+    react-native-linear-gradient:
+      optional: true
+  checksum: 10/4979977643a912735738607b507312046f536132bb8c9106b86eb27131b0e0f1b47ececdaed000aef08090e36547a8df7ebf4e48d56bbe120c5954cf35ab2a89
+  languageName: node
+  linkType: hard
+
 "react-native-helmet-async@npm:2.0.4":
   version: 2.0.4
   resolution: "react-native-helmet-async@npm:2.0.4"
@@ -13355,16 +13394,6 @@ __metadata:
   peerDependencies:
     react: ^16.6.0 || ^17.0.0 || ^18.0.0
   checksum: 10/217bd0eaa61d426a512634369c70c44ce8b92127ec626dc40c65b72b1be1534ed3ed00ba2dd1a9ad77d1716ce8fd1e6db3f7209534303a652d9932a962d2c830
-  languageName: node
-  linkType: hard
-
-"react-native-infinite-wheel-picker@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "react-native-infinite-wheel-picker@npm:1.0.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10/14cae4f25944958135a17fbf10b395344ad276ca773f40c956192394a5ef36c57eeb17e18bf417b08e4c731f963378138fcc2358f51934da2ca0a23fddca8681
   languageName: node
   linkType: hard
 
@@ -13438,9 +13467,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg@npm:15.6.0":
-  version: 15.6.0
-  resolution: "react-native-svg@npm:15.6.0"
+"react-native-svg@npm:15.9.0":
+  version: 15.9.0
+  resolution: "react-native-svg@npm:15.9.0"
   dependencies:
     css-select: "npm:^5.1.0"
     css-tree: "npm:^1.1.3"
@@ -13448,21 +13477,7 @@ __metadata:
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/e778b61b249988e063a3f740383583a910a16159d92ac4fd385452b5572e02c6547db27d181fe1edf6097389e521fa763fe867483419c7ad4b989c191e6c500e
-  languageName: node
-  linkType: hard
-
-"react-native-ui-datepicker@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "react-native-ui-datepicker@npm:2.0.4"
-  dependencies:
-    dayjs: "npm:^1.11.13"
-    lodash: "npm:^4.17.21"
-    react-native-wheely: "npm:^0.6.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10/39da674809a855713cf97edfb2da1bfea24b9e7ea1ab76facc76fac6679efb69b94cb78f5f42589131408c1887981f273c4f4a0e7a925891571d1ef8274c0a1b
+  checksum: 10/10c2c5e0239c8a90dab95fc29e306852d3b8a3318d3930c1ab0ac03853baed8fb7f3bb5299cc367b83a9e67ddf8ebd5cdda8cb0878c3394799d112c7c9979db6
   languageName: node
   linkType: hard
 
@@ -13495,13 +13510,6 @@ __metadata:
     react-native: "*"
     typescript: "*"
   checksum: 10/98bf741312b587d04cbef9c906b99351d6a96435925e6ceba4b5c9736cd9859061d17306dd2ceb5ccc43e53a6666c551db47930d00091360c300473eae3a40d0
-  languageName: node
-  linkType: hard
-
-"react-native-wheely@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "react-native-wheely@npm:0.6.0"
-  checksum: 10/c945e78f262f739da233f4348963c9fde976ec1a7cb2fd557e273db4d57dfa65e1e1b42f444d42158b940184ceb8c2fcd985001df57d9aedc238aec1ca4ba13c
   languageName: node
   linkType: hard
 
