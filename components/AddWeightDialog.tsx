@@ -104,7 +104,7 @@ export function AddWeightDialog() {
           <Adapt when="sm" platform="touch">
             <Sheet
               snapPointsMode="percent"
-              snapPoints={[80, 60, 100]}
+              snapPoints={[60, 80, 100]}
               animation="medium"
               zIndex={200000}
               dismissOnSnapToBottom

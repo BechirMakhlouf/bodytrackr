@@ -1,11 +1,27 @@
 import type { User } from '@supabase/supabase-js'
 import type { Unit } from 'entities/UserSettings'
+import { WeightLog } from 'entities/UserWeight'
 import type { Database } from 'library/powersync/AppSchema'
 import type { System, system } from 'library/powersync/system'
-import { uuidv4 } from 'utils/utils'
+import { kgToLbs, uuidv4 } from 'utils/utils'
 
 export type UserWeightRow = Database['users_weight']
 type KysleyDatabase = typeof system.db
+
+export function userWeightRowToUserWeight(
+  userWeightRows: UserWeightRow[],
+  prefUnit?: Unit
+) {
+  return userWeightRows.map(
+    (row) =>
+      new WeightLog(
+        row.id,
+        prefUnit === 'imperial' ? kgToLbs(row.weight_kg!) : row.weight_kg!,
+        new Date(row.date_at!),
+        prefUnit || 'metric'
+      )
+  )
+}
 
 export class UserWeightRepository {
   system: System
@@ -20,7 +36,7 @@ export class UserWeightRepository {
 
   async *watch(weightUnit?: Unit) {
     for await (const queryResult of this.system.powersync.watch(
-      'select * from users_weight ORDER BY date_at DESC;'
+      `select * FROM users_weight WHERE user_id = '${this.user.id}' ORDER BY date_at DESC;`
     ))
       yield queryResult.rows?._array.map((r) => r) as UserWeightRow[]
   }

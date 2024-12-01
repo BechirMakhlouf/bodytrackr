@@ -10,14 +10,14 @@ interface AlertDialogState {
   setIsOpen: (isOpen: boolean) => void
   onCancel: () => void
   onConfirm: () => void
-  resetAlertDialogState: () => void
+  resetAlertDialogState: () => Promise<void> | void
   setAlertDialogState: (props: {
     title?: string
     description?: string
     confirmText?: string
     cancelText?: string
     isOpen?: boolean
-    onCancel?: () => void
+    onCancel?: () => Promise<void> | void
     onConfirm?: () => Promise<void> | void
   }) => Promise<void>
 }

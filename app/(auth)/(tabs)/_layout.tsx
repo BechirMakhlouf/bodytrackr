@@ -13,41 +13,38 @@ import {
 import { useAppStore } from 'store'
 
 import { AddWeightDialog } from 'components/AddWeightDialog'
-import { useCallback, useEffect } from 'react'
-import { WeightLog } from 'entities/UserWeight'
-import { kgToLbs } from 'utils/utils'
 
 export default function TabLayout() {
   const theme = useTheme()
-  const { signOut, repository, setWeightLog, userSettings } = useAppStore()
   const router = useRouter()
+  // const { repository, setWeightLog, userSettings } = useAppStore()
 
-  const updateUserWeightList = useCallback(async () => {
-    if (!repository) return
-
-    for await (const userWeightRows of repository.userWeightRepo.watch()) {
-      setWeightLog(
-        userWeightRows.map(
-          (row) =>
-            new WeightLog(
-              row.id,
-              userSettings?.prefUnit === 'imperial'
-                ? kgToLbs(row.weight_kg!)
-                : row.weight_kg!,
-              new Date(row.date_at!),
-              userSettings?.prefUnit || 'metric'
-            )
-        )
-      )
-    }
-  }, [repository])
-
-  useEffect(() => {
-    if (!repository) {
-      return
-    }
-    updateUserWeightList()
-  }, [])
+  // const updateUserWeightList = useCallback(async () => {
+  //   if (!repository) return
+  //
+  //   for await (const userWeightRows of repository.userWeightRepo.watch()) {
+  //     setWeightLog(
+  //       userWeightRows.map(
+  //         (row) =>
+  //           new WeightLog(
+  //             row.id,
+  //             userSettings?.prefUnit === 'imperial'
+  //               ? kgToLbs(row.weight_kg!)
+  //               : row.weight_kg!,
+  //             new Date(row.date_at!),
+  //             userSettings?.prefUnit || 'metric'
+  //           )
+  //       )
+  //     )
+  //   }
+  // }, [repository])
+  //
+  // useEffect(() => {
+  //   if (!repository) {
+  //     return
+  //   }
+  //   updateUserWeightList()
+  // }, [])
   return (
     <>
       <AddWeightDialog />

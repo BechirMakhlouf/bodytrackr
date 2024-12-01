@@ -3,10 +3,38 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { Stack } from 'expo-router'
 //import { Provider } from './Provider'
 import { useTheme, Text } from 'tamagui'
+import { useAppStore } from 'store'
+import { userWeightRowToUserWeight } from 'repository/UserWeight'
+import { useCallback, useEffect } from 'react'
 
 export default function tabLayoutNav() {
   const colorScheme = useColorScheme()
   const theme = useTheme()
+
+  // const { repository, setWeightLog, userSettings } = useAppStore()
+  // const updateUserWeightList = useCallback(async () => {
+  //   if (!repository) return
+  //
+  //   for await (const userWeightRows of repository.userWeightRepo.watch()) {
+  //     setWeightLog(userWeightRowToUserWeight(userWeightRows, userSettings?.prefUnit))
+  //   }
+  // }, [repository, userSettings])
+  //
+  // const updateUserMeasurements = useCallback(async () => {
+  //   if (!repository) return
+  //
+  //   for await (const userWeightRows of repository.userWeightRepo.watch()) {
+  //     setWeightLog(userWeightRowToUserWeight(userWeightRows, userSettings?.prefUnit))
+  //   }
+  // }, [repository, userSettings])
+  //
+  // useEffect(() => {
+  //   if (!repository) {
+  //     return
+  //   }
+  //   updateUserWeightList()
+  // }, [])
+
   return (
     <>
       <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
@@ -44,7 +72,7 @@ export default function tabLayoutNav() {
           }}
         />
         <Stack.Screen
-          name="measurement/[measurement]"
+          name="measurement/[measurementTypeId]"
           options={{
             title: 'Measurement',
             headerShown: false,

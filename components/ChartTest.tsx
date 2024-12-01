@@ -1,73 +1,165 @@
-import * as React from 'react'
-import { View } from 'tamagui'
-import { CartesianChart, Line, useChartPressState } from 'victory-native'
-import { Circle, Text as SKText, useFont } from '@shopify/react-native-skia'
-import { useDerivedValue, type SharedValue } from 'react-native-reanimated'
-//@ts-ignore
-import inter from '../assets/DejaVuSansMono.ttf' // Wherever your font actually lives
-import { useTheme } from '@react-navigation/native'
-import { useAppStore } from 'store'
+import { ruleTypes } from 'gifted-charts-core'
+import { LineChart } from 'react-native-gifted-charts'
+import { View, Text, useTheme } from 'tamagui'
 
-//const DATA = Array.from({ length: 14 }, (_, i) => ({
-//  day: i,
-//  highTmp: 40 + 30 * Math.random(),
-//}))
+export function ChartTest() {
+  const theme = useTheme()
+  const ptData = [
+    { value: 160, date: '1 Apr 2022' },
+    { value: 180, date: '2 Apr 2022' },
+    { value: 190, date: '3 Apr 2022' },
+    { value: 180, date: '4 Apr 2022' },
+    { value: 140, date: '5 Apr 2022' },
+    { value: 145, date: '6 Apr 2022' },
+    { value: 160, date: '7 Apr 2022' },
+    { value: 200, date: '8 Apr 2022' },
 
-//const { userWeightLog } = useAppStore()
-//const DATA = userWeightLog.map(({ weight }, i) => ({
-//  day: i,
-//  highTmp: weight,
-//}))
-//
-//export function ChartTest() {
-//  const font = useFont(inter, 12)
-//
-//  const { state, isActive } = useChartPressState({ x: 0, y: { highTmp: 0 } })
-//  const { dark: isDark } = useTheme()
-//  const value = useDerivedValue(() => {
-//    return state.y.highTmp.value.value.toFixed(2)
-//  }, [state])
-//  const labelColor = isDark ? 'white' : 'black'
-//  const lineColor = isDark ? 'lightgray' : 'black'
-//
-//  return (
-//    <View style={{ width: 380, height: 300 }}>
-//      <CartesianChart
-//        data={DATA}
-//        xKey="day"
-//        yKeys={['highTmp']}
-//        axisOptions={{
-//          font,
-//          labelColor,
-//          lineColor,
-//        }}
-//        chartPressState={state}
-//      >
-//        {({ points, chartBounds }) => (
-//          <>
-//            <SKText
-//              color={'red'}
-//              font={font}
-//              x={chartBounds.left + 10}
-//              y={chartBounds.top + 40}
-//              text={value}
-//              style={'fill'}
-//            />
-//
-//            <Line
-//              curveType="natural"
-//              points={points.highTmp}
-//              color="lightgreen"
-//              strokeWidth={3}
-//            />
-//            {isActive && <ToolTip x={state.x.position} y={state.y.highTmp.position} />}
-//          </>
-//        )}
-//      </CartesianChart>
-//    </View>
-//  )
-//}
-//
-//function ToolTip({ x, y }: { x: SharedValue<number>; y: SharedValue<number> }) {
-//  return <Circle cx={x} cy={y} r={8} color="green" />
-//}
+    { value: 220, date: '9 Apr 2022' },
+    {
+      value: 240,
+      date: '10 Apr 2022',
+      label: '10 Apr',
+      labelTextStyle: { color: 'lightgray', width: 60 },
+    },
+    { value: 280, date: '11 Apr 2022' },
+    { value: 260, date: '12 Apr 2022' },
+    { value: 340, date: '13 Apr 2022' },
+    { value: 385, date: '14 Apr 2022' },
+    { value: 280, date: '15 Apr 2022' },
+    { value: 390, date: '16 Apr 2022' },
+
+    { value: 370, date: '17 Apr 2022' },
+    { value: 285, date: '18 Apr 2022' },
+    { value: 295, date: '19 Apr 2022' },
+    {
+      value: 300,
+      date: '20 Apr 2022',
+      label: '20 Apr',
+      labelTextStyle: { color: 'gray', width: 60 },
+    },
+    { value: 280, date: '21 Apr 2022' },
+    { value: 295, date: '22 Apr 2022' },
+    { value: 260, date: '23 Apr 2022' },
+    { value: 255, date: '24 Apr 2022' },
+
+    { value: 190, date: '25 Apr 2022' },
+    { value: 220, date: '26 Apr 2022' },
+    { value: 205, date: '27 Apr 2022' },
+    { value: 230, date: '28 Apr 2022' },
+    { value: 210, date: '29 Apr 2022' },
+    {
+      value: 200,
+      date: '30 Apr 2022',
+      label: '30 Apr',
+      labelTextStyle: { color: 'gray', width: 60 },
+    },
+    { value: 240, date: '1 May 2022' },
+    { value: 250, date: '2 May 2022' },
+    { value: 280, date: '3 May 2022' },
+    { value: 250, date: '4 May 2022' },
+    {
+      value: 210,
+      date: '5 May 2022',
+
+      label: '31 Apr',
+      labelTextStyle: { color: 'gray', width: 60 },
+    },
+    { value: 240, date: '1 May 2022' },
+    { value: 250, date: '2 May 2022' },
+    { value: 280, date: '3 May 2022' },
+    { value: 250, date: '4 May 2022' },
+    { value: 210, date: '5 May 2022' },
+  ]
+  return (
+    <View
+      style={{
+        paddingVertical: 100,
+        paddingLeft: 20,
+        // backgroundColor: '#1C1C1C',
+      }}
+    >
+      <LineChart
+        data={ptData}
+        rotateLabel
+        curved
+        width={400}
+        hideDataPoints
+        spacing={10}
+        color="#13f0e0"
+        thickness={2}
+        startFillColor="rgba(20,40,81,0.3)"
+        endFillColor="rgba(20,60,81,0.01)"
+        startOpacity={0.9}
+        endOpacity={0.2}
+        initialSpacing={0}
+        noOfSections={6}
+        stepHeight={50}
+        height={300}
+        // maxValue={600}
+        yAxisColor="white"
+        yAxisThickness={0}
+        rulesType={ruleTypes.SOLID}
+        rulesColor="gray"
+        // yAxisTextStyle={{ color: 'gray' }}
+        // yAxisLabelPrefix="hello"
+        yAxisTextNumberOfLines={2}
+        // yAxisLabelWidth={40}
+        // yAxisSide='right'
+        xAxisColor="lightgray"
+        pointerConfig={{
+          pointerStripHeight: 160,
+          pointerStripColor: 'lightgray',
+          pointerStripWidth: 2,
+          pointerColor: 'lightgray',
+          radius: 6,
+          pointerLabelWidth: 100,
+          pointerLabelHeight: 90,
+          // activatePointersOnLongPress: true,
+          autoAdjustPointerLabelPosition: false,
+          pointerLabelComponent: (items) => {
+            return (
+              <View
+                backgroundColor={'$background'}
+                style={
+                  {
+                    // height: 90,
+                    // width: 100,
+                    // justifyContent: 'center',
+                    // marginTop: -30,
+                    // marginLeft: -40,
+                  }
+                }
+              >
+                <Text
+                // style={{
+                //   // color: 'white',
+                //   fontSize: 14,
+                //   marginBottom: 6,
+                //   textAlign: 'center',
+                // }}
+                >
+                  {items[0].date}
+                </Text>
+
+                <View
+                  style={
+                    {
+                      // paddingHorizontal: 14,
+                      // paddingVertical: 6,
+                      // borderRadius: 16,
+                      // backgroundColor: 'white',
+                    }
+                  }
+                >
+                  <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>
+                    {'$' + items[0].value + '.0'}
+                  </Text>
+                </View>
+              </View>
+            )
+          },
+        }}
+      />
+    </View>
+  )
+}

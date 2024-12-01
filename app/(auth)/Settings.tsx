@@ -66,6 +66,26 @@ export default function ModalScreen() {
         />
       </Section>
       <Separator />
+      <Section gap="$3">
+        <ListItem
+          hoverTheme
+          pressTheme
+          title={'Disconnect'}
+          fontSize={'$10'}
+          theme={'red'}
+          icon={LogOut}
+          scaleIcon={2}
+        />
+        <ListItem
+          hoverTheme
+          pressTheme
+          theme={'red'}
+          title={'Delete Account'}
+          fontSize={'$10'}
+          icon={X}
+          scaleIcon={2}
+        />
+      </Section>
     </View>
   )
 }

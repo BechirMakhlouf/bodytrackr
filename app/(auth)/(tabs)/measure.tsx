@@ -8,8 +8,9 @@ import { RefreshControl } from 'react-native'
 import type { UserWeightRow } from 'repository/UserWeight'
 import { useRouter } from 'expo-router'
 import { system } from 'library/powersync/system'
-import { Database } from 'library/powersync/AppSchema'
+import type { Database } from 'library/powersync/AppSchema'
 import { SheetDemo } from 'components/SheetTest'
+import { bodyMeasurementTypes } from 'entities/BodyMeasurements'
 
 export default function Measure() {
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -36,7 +37,7 @@ export default function Measure() {
     <>
       <ScrollView paddingVertical="$2">
         <YStack gap="$2">
-          {body_measurements_types.map((measurementType) => (
+          {bodyMeasurementTypes.map((measurementType) => (
             <ListItem
               key={measurementType.id}
               hoverTheme

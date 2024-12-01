@@ -4,31 +4,6 @@ import React from 'react'
 import type { SizeTokens } from 'tamagui'
 import { Button, Form, H4, Input, Label, Spinner, Theme, View, XStack } from 'tamagui'
 
-const items = [
-  { name: 'Apple' },
-  { name: 'Pear' },
-  { name: 'Blackberry' },
-  { name: 'Peach' },
-  { name: 'Apricot' },
-  { name: 'Melon' },
-  { name: 'Honeydew' },
-  { name: 'Starfruit' },
-  { name: 'Blueberry' },
-  { name: 'Raspberry' },
-  { name: 'Strawberry' },
-  { name: 'Mango' },
-  { name: 'Pineapple' },
-  { name: 'Lime' },
-  { name: 'Lemon' },
-  { name: 'Coconut' },
-  { name: 'Guava' },
-  { name: 'Papaya' },
-  { name: 'Orange' },
-  { name: 'Grape' },
-  { name: 'Jackfruit' },
-  { name: 'Durian' },
-]
-
 export default function ProfileSettings(props: { size: SizeTokens }) {
   const [status, setStatus] = React.useState<'off' | 'submitting' | 'submitted'>('off')
 

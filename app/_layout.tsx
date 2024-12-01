@@ -56,13 +56,13 @@ function RootLayoutNav() {
   const { isSignedIn, initApp } = useAppStore()
 
   useEffect(() => {
-    initApp()
-  }, [])
+    console.debug('isSignedIn: ', isSignedIn)
+    if (isSignedIn) initApp()
+    else initApp()
+  }, [isSignedIn])
 
   useEffect(() => {
-    console.debug('re-evaluating the route')
-    console.debug('segment[0]: ', segment[0])
-    console.debug('return to root: ', segment[0] === '(auth)' && !isSignedIn)
+    // console.debug('return to root: ', segment[0] === '(auth)' && !isSignedIn)
     if (segment[0] === '(auth)' && !isSignedIn) {
       router.replace('/')
     } else if (isSignedIn) {

@@ -16,7 +16,7 @@ export default function profile() {
             />
           </Avatar>
           <YStack marginHorizontal="$4" alignSelf="center">
-            <H2>Sheila Blake</H2>
+            <H2>Username</H2>
             <Text fontStyle="italic">Member Since: Feb 22, 2024.</Text>
           </YStack>
         </XStack>

@@ -5,13 +5,15 @@ import { useCallback, useEffect, useState } from 'react'
 import { ChevronRight, Plus } from '@tamagui/lucide-icons'
 import { useAppStore } from 'store'
 import { RefreshControl } from 'react-native'
-import type { UserWeightRow } from 'repository/UserWeight'
+import { userWeightRowToUserWeight } from 'repository/UserWeight'
+import type { WeightLog } from 'entities/UserWeight'
 
 export default function TabTwoScreen() {
-  const { repository, userWeightLog } = useAppStore()
+  const { repository, userSettings } = useAppStore()
   const { openWeightDialog } = useAddWeightDialogState()
-  const [isRefreshing, setIsRefreshing] = useState(false)
 
+  // refresh
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const onRefresh = useCallback(() => {
     setIsRefreshing(true)
     setTimeout(() => {
@@ -19,20 +21,16 @@ export default function TabTwoScreen() {
     }, 2000)
   }, [])
 
-  //const updateUserWeightList = useCallback(async () => {
-  //  if (!repository) return
-  //
-  //  for await (const updatedList of repository.userWeightRepo.watch()) {
-  //    setUserWeightList(updatedList)
-  //  }
-  //}, [repository])
-  //
-  //useEffect(() => {
-  //  if (!repository) {
-  //    return
-  //  }
-  //  updateUserWeightList()
-  //}, [])
+  const [userWeightLog, setUserWeightLog] = useState([] as WeightLog[])
+  const updateUserWeightList = useCallback(async () => {
+    if (!repository) return
+    for await (const userWeightRows of repository.userWeightRepo.watch()) {
+      setUserWeightLog(userWeightRowToUserWeight(userWeightRows, userSettings?.prefUnit))
+    }
+  }, [repository, userSettings])
+  useEffect(() => {
+    updateUserWeightList()
+  }, [repository, userSettings])
 
   return (
     <SafeAreaView>

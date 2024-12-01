@@ -1,7 +1,7 @@
 import type { AuthError, Session, User } from '@supabase/supabase-js'
 import type { UserInfo } from 'entities/UserInfo'
 import { type Theme, type Unit, UserSettings } from 'entities/UserSettings'
-import { WeightLog } from 'entities/UserWeight'
+import type { WeightLog } from 'entities/UserWeight'
 import { type System, system } from 'library/powersync/system'
 import { UserRepository } from 'repository'
 import { create } from 'zustand'
@@ -36,12 +36,13 @@ export const useAppStore = create<Store>((set) => ({
   repository: null,
   user: null,
   userSettings: null,
-  userWeightLog: [],
 
+  userWeightLog: [],
   setWeightLog: (weightLog: WeightLog[]) => set({ userWeightLog: weightLog }),
+
   initApp: async () => {
     const sessionResponse = await system.supabaseConnector.client.auth.getSession()
-
+    system.init()
     if (!sessionResponse?.data?.session) {
       set({
         isSignedIn: false,

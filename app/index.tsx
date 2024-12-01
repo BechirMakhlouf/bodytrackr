@@ -1,7 +1,7 @@
 import { router } from 'expo-router'
 import { Button, H1, useThemeName, XStack, YStack } from 'tamagui'
 
-export default function InputsDemo() {
+export default function IndexPage() {
   const theme = useThemeName()
 
   return (
@@ -19,7 +19,7 @@ export default function InputsDemo() {
         marginTop="$3"
         padding="$2"
       >
-        <XStack gap="$3">
+        <XStack gap="$1">
           <Button size={'$7'} theme={theme} onPress={() => router.push('/signIn')}>
             Sign In
           </Button>
