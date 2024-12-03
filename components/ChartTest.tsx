@@ -1,9 +1,8 @@
 import { ruleTypes } from 'gifted-charts-core'
 import { LineChart } from 'react-native-gifted-charts'
-import { View, Text, useTheme } from 'tamagui'
+import { View, Text } from 'tamagui'
 
 export function ChartTest() {
-  const theme = useTheme()
   const ptData = [
     { value: 160, date: '1 Apr 2022' },
     { value: 180, date: '2 Apr 2022' },
@@ -19,7 +18,7 @@ export function ChartTest() {
       value: 240,
       date: '10 Apr 2022',
       label: '10 Apr',
-      labelTextStyle: { color: 'lightgray', width: 60 },
+      labelTextStyle: { color: 'gray', width: 60 },
     },
     { value: 280, date: '11 Apr 2022' },
     { value: 260, date: '12 Apr 2022' },
@@ -27,7 +26,6 @@ export function ChartTest() {
     { value: 385, date: '14 Apr 2022' },
     { value: 280, date: '15 Apr 2022' },
     { value: 390, date: '16 Apr 2022' },
-
     { value: 370, date: '17 Apr 2022' },
     { value: 285, date: '18 Apr 2022' },
     { value: 295, date: '19 Apr 2022' },
@@ -71,18 +69,12 @@ export function ChartTest() {
     { value: 210, date: '5 May 2022' },
   ]
   return (
-    <View
-      style={{
-        paddingVertical: 100,
-        paddingLeft: 20,
-        // backgroundColor: '#1C1C1C',
-      }}
-    >
+    <View>
       <LineChart
         data={ptData}
         rotateLabel
         curved
-        width={400}
+        width={350}
         hideDataPoints
         spacing={10}
         color="#13f0e0"
@@ -105,60 +97,30 @@ export function ChartTest() {
         yAxisTextNumberOfLines={2}
         // yAxisLabelWidth={40}
         // yAxisSide='right'
-        xAxisColor="lightgray"
-        pointerConfig={{
-          pointerStripHeight: 160,
-          pointerStripColor: 'lightgray',
-          pointerStripWidth: 2,
-          pointerColor: 'lightgray',
-          radius: 6,
-          pointerLabelWidth: 100,
-          pointerLabelHeight: 90,
-          // activatePointersOnLongPress: true,
-          autoAdjustPointerLabelPosition: false,
-          pointerLabelComponent: (items) => {
-            return (
-              <View
-                backgroundColor={'$background'}
-                style={
-                  {
-                    // height: 90,
-                    // width: 100,
-                    // justifyContent: 'center',
-                    // marginTop: -30,
-                    // marginLeft: -40,
-                  }
-                }
-              >
-                <Text
-                // style={{
-                //   // color: 'white',
-                //   fontSize: 14,
-                //   marginBottom: 6,
-                //   textAlign: 'center',
-                // }}
-                >
-                  {items[0].date}
-                </Text>
-
-                <View
-                  style={
-                    {
-                      // paddingHorizontal: 14,
-                      // paddingVertical: 6,
-                      // borderRadius: 16,
-                      // backgroundColor: 'white',
-                    }
-                  }
-                >
-                  <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>
-                    {'$' + items[0].value + '.0'}
-                  </Text>
-                </View>
-              </View>
-            )
-          },
-        }}
+        xAxisColor="gray"
+        // pointerConfig={{
+        //   pointerStripHeight: 160,
+        //   pointerStripColor: 'gray',
+        //   pointerStripWidth: 2,
+        //   pointerColor: 'gray',
+        //   radius: 6,
+        //   pointerLabelWidth: 100,
+        //   pointerLabelHeight: 90,
+        //   // activatePointersOnLongPress: true,
+        //   autoAdjustPointerLabelPosition: false,
+        //   // pointerLabelComponent: (items) => {
+        //   //   return (
+        //   //     <View>
+        //   //       <Text>{items[0].date}</Text>
+        //   //       <View>
+        //   //         <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>
+        //   //           {'$' + items[0].value + '.0'}
+        //   //         </Text>
+        //   //       </View>
+        //   //     </View>
+        //   //   )
+        //   // },
+        // }}
       />
     </View>
   )

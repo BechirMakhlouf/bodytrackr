@@ -12,7 +12,14 @@ export function createRandomUsername(): string {
 
 export type Gender = 'female' | 'male' | 'other' | 'unknown'
 
-export class UserInfo {
+export interface IUserInfo {
+  userId: string
+  username: string
+  gender: Gender
+  birthday?: Date
+}
+
+export class UserInfo implements IUserInfo {
   userId: string
   username: string
   gender: Gender

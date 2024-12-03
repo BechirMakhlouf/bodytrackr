@@ -122,21 +122,20 @@ export default function TabTwoScreen() {
             </ListItem>
           )
         })}
+        <Button
+          icon={Plus}
+          theme={'active'}
+          marginHorizontal="$4"
+          onPress={() => {
+            setIsSheetOpen(true)
+            setUpdateMeasurementId(undefined)
+            setMeasurementValue(undefined)
+            setMeasurementDate(new Date())
+          }}
+        >
+          Add measurement
+        </Button>
       </ScrollView>
-
-      <Button
-        icon={Plus}
-        theme={'active'}
-        marginHorizontal="$4"
-        onPress={() => {
-          setIsSheetOpen(true)
-          setUpdateMeasurementId(undefined)
-          setMeasurementValue(undefined)
-          setMeasurementDate(new Date())
-        }}
-      >
-        Add measurement
-      </Button>
 
       {repository && (
         <InputSheet

@@ -5,10 +5,7 @@ export default function profile() {
   return (
     <SafeAreaView>
       <ScrollView>
-        <XStack
-          paddingHorizontal="$3"
-          //borderWidth="$1" borderColor={'blue'}
-        >
+        <XStack paddingHorizontal="$3">
           <Avatar circular size={'$10'}>
             <Avatar.Image
               accessibilityLabel="Cam"

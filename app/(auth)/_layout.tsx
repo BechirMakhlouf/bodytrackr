@@ -1,6 +1,6 @@
 import { StatusBar, useColorScheme } from 'react-native'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 //import { Provider } from './Provider'
 import { useTheme, Text } from 'tamagui'
 import { useAppStore } from 'store'
@@ -11,6 +11,10 @@ export default function tabLayoutNav() {
   const colorScheme = useColorScheme()
   const theme = useTheme()
 
+  //WARN: this is temporary change this.
+  useEffect(() => {
+    router.navigate('/ProfileSettings')
+  }, [])
   // const { repository, setWeightLog, userSettings } = useAppStore()
   // const updateUserWeightList = useCallback(async () => {
   //   if (!repository) return

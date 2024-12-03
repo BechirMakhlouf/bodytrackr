@@ -3,6 +3,7 @@ import type { BodyMeasurementTypeId } from 'entities/BodyMeasurements'
 import type { Database } from 'library/powersync/AppSchema'
 import type { System, system } from 'library/powersync/system'
 import { BodyMeasurementsRepository } from 'repository/BodyMeasurement'
+import { UserInfoRepository } from 'repository/UserInfo'
 import { UserSettingsRepository } from 'repository/UserSettings'
 import { UserWeightRepository } from 'repository/UserWeight'
 import { uuidv4 } from 'utils/utils'
@@ -17,6 +18,7 @@ export class UserRepository {
   session: Session
   userWeightRepo: UserWeightRepository
   userSettingsRepo: UserSettingsRepository
+  userInfoRepo: UserInfoRepository
 
   constructor(system: System, session: Session) {
     this.system = system
@@ -24,6 +26,7 @@ export class UserRepository {
     this.user = session.user
     this.userWeightRepo = new UserWeightRepository(this.system, this.user)
     this.userSettingsRepo = new UserSettingsRepository(this.system, this.user)
+    this.userInfoRepo = new UserInfoRepository(this.system, this.user)
   }
 
   getMeasurementRepository(measurementId: BodyMeasurementTypeId) {

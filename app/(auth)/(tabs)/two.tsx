@@ -57,15 +57,15 @@ export default function TabTwoScreen() {
             </XStack>
           )
         })}
+        <Button
+          icon={Plus}
+          theme={'active'}
+          marginHorizontal="$4"
+          onPress={() => openWeightDialog(undefined, new Date(), undefined)}
+        >
+          Add Weight
+        </Button>
       </ScrollView>
-      <Button
-        icon={Plus}
-        theme={'active'}
-        marginHorizontal="$4"
-        onPress={() => openWeightDialog(undefined, new Date(), undefined)}
-      >
-        Add Weight
-      </Button>
     </SafeAreaView>
   )
 }
