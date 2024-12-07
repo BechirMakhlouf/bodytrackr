@@ -1,6 +1,5 @@
 import type { User } from '@supabase/supabase-js'
 import type { Gender } from 'entities/UserInfo'
-import type { Theme, Unit } from 'entities/UserSettings'
 import type { Database } from 'library/powersync/AppSchema'
 import type { System, system } from 'library/powersync/system'
 import { dateObjectToDateSqlType, uuidv4 } from 'utils/utils'
@@ -21,13 +20,15 @@ export class UserInfoRepository {
   }
 
   async get(): Promise<UserInfoRow | null> {
-    //const queryResult = await this.db
-    //  .selectFrom('users_info')
-    //  .selectAll()
-    //  .where('user_id', '=', this.user.id)
-    //  .executeTakeFirst()
-    //
-    //return queryResult || null
+    const userInfoRow = await this.db
+      .selectFrom('users_info')
+      .selectAll()
+      .where('user_id', '=', this.user.id)
+      .executeTakeFirst()
+
+    if (!userInfoRow) {
+      await this.upsert()
+    }
 
     return (
       (await this.db
@@ -65,7 +66,6 @@ export class UserInfoRepository {
       })
       .execute()
   }
-
   async delete() {
     return await this.db
       .deleteFrom('users_info')

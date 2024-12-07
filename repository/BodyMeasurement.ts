@@ -32,9 +32,6 @@ export class BodyMeasurementsRepository {
   bodyMeasurementTypeId: BodyMeasurementTypeId
 
   async *watch(weightUnit?: Unit) {
-    console.log(this.bodyMeasurementTypeId)
-    console.log(this.bodyMeasurementTypeId)
-    console.log(this.bodyMeasurementTypeId)
     for await (const queryResult of this.system.powersync.watch(
       `SELECT * FROM users_body_measurements_cm 
         WHERE body_measurement_id = '${this.bodyMeasurementTypeId}'
